@@ -70,7 +70,7 @@ let beginCalcButton = document.querySelector('#start'),
     
           if ( isNaN((parseInt(a))) && (typeof(a) != null) && a != '' 
            && a.length < 50 && (typeof(b) != null) && b != '' && !isNaN(b)) {
-           appData.expenses[a] = b;
+           appData.expenses[a] = +b;
            sum += +b;
           } else {
           i--;
@@ -90,7 +90,13 @@ let beginCalcButton = document.querySelector('#start'),
     countDayButton.addEventListener('click', function() {
 
         if(appData.budget != undefined){
-            appData.moneyPerDay = (appData.budget/30).toFixed();//.toFixed() - to round number to integer, .toFixed(1) - one charachter after coma. STRING
+            
+            let expenses = 0;
+            for (let item in appData.expenses){
+                expenses += appData.expenses[item];
+            }
+
+            appData.moneyPerDay = ((appData.budget-expenses)/30).toFixed();//.toFixed() - to round number to integer, .toFixed(1) - one charachter after coma. STRING
             dayBudgetValue.textContent = appData.moneyPerDay;
 
             if (appData.moneyPerDay < 100) {
